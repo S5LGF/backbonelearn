@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            var data = {
+                title : 'underscore 使用',
+                content: 'hello, underscore!'
+            };
+            var object = _(data);
+            console.log(object.value().title + " " + object.value().content);
+
+            var arr = [1,2,3,4,5,8]
+            var numData = _(arr);
+            console.log("min value:" + numData.min() + " " + "max value:" + numData.max());
+        })
+    </script>
+</body>
+</html>

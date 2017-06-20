@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            var student = backbone.Model.extend({
+                defaults: {
+                    name: "Hanmeimei",
+                    sex: "",
+                    phone: "",
+                    age: "14",
+                    score: "100"
+                }
+            });
+            var stu = new student();
+            stu.on("change", function() {
+                console.log("改变了对象的默认值");
+            });
+
+            stu.on("change:name change:score change:age", function(model, value) {
+                console.log("修改了name属性的值， 新值为：" + model.get("name"));
+                var oldScore = model.previous("score");
+                var newSore = model.get("score");
+                if (newSore > oldScore) {
+                    console.log("成绩进步了，提升了" + (newSore - oldScore) + "分");
+                } else if (newSore < oldScore) {
+                    console.log("成绩退步了，下降了" + (oldScore - newSore) + "分");
+                } else {
+                    console.log("成绩没有变化");
+                }
+
+                var oldAge = model.previous("age");
+                var newAge = model.get("age");
+                if (newAge > oldAge) {
+                    console.log("年岁增长了" + (newAge - oldAge) + "岁");
+                } else {
+                    console.log("年岁没有变化");
+                }
+            });
+
+            stu.set("name", "Lilei");
+            stu.set("age", 15);
+            stu.set("score", 150);
+
+            /*
+            stu.set({
+                "name": "Lilei",
+                "age": 15,
+                "score": 150
+            });
+            */
+
+            var objEvents = {
+                "change:name": changeName,
+                "change:score": changeScore,
+                "change:age": changeAge
+            }
+            stu.on(objEvents);
+
+            function changeName(model, value) {
+                console.log("Hello, my name is " + model.get("name"));
+            }
+
+            function changeScore(model, value) {
+                var oldScore = model.previous("score");
+                var newSore = model.get("score");
+                if (newSore > oldScore) {
+                    console.log("成绩进步了，提升了" + (newSore - oldScore) + "分");
+                } else if (newSore < oldScore) {
+                    console.log("成绩退步了，下降了" + (oldScore - newSore) + "分");
+                } else {
+                    console.log("成绩没有变化");
+                }
+            }
+
+            function changeAge(model, value) {
+                var oldAge = model.previous("age");
+                var newAge = model.get("age");
+                if (newAge > oldAge) {
+                    console.log("年岁增长了" + (newAge - oldAge) + "岁");
+                } else {
+                    console.log("年岁没有变化");
+                }
+            }
+
+            stu.set({
+                "name": "Lintao",
+                "score": "99",
+                "age": 17
+            });
+
+
+            //先触发属性事件，再触发默认的change事件
+        })
+    </script>
+</body>
+
+</html>

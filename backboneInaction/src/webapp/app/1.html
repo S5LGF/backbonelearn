@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+<body>
+<div id="divTip"> Click Me
+</div>
+<script type="text/javascript">
+    require(['jquery', 'backbone', 'underscore'], function ($, backbone, underscore) {
+        var divView = {
+            ele: '#divTip',
+            tip: 'hello, underscore!',
+            onClick: function () {
+                $(this.ele).html(this.tip);
+            }
+        };
+        _.bindAll(divView, 'onClick');
+        $(divView.ele).bind('click', divView.onClick);
+
+        //$('body').css({'backgroundColor': 'red'});
+    })
+
+</script>
+</body>
+</html>

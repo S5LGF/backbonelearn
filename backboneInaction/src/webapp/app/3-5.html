@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            var student = backbone.Model.extend({
+                defaults: {
+                    name: "Hanmeimei",
+                    sex: "",
+                    phone: "",
+                    age: 14,
+                    score: 100
+                }
+            });
+            var stu = new student();
+            var intNum = 0;
+            stu.once("change", function() {
+                intNum++;
+                console.log("改变了对象的默认值,触发了" + intNum + "次 ");
+            });
+
+            stu.set("name", "Lilei");
+            stu.set("age", 15);
+            stu.set("score", 150);
+
+            stu.on("changeNameAge", function() {
+                console.log("手动出发了一个自定义事件");
+            });
+            stu.on("change:age", function(model, value) {
+                if (value != undefined) {
+                    console.log("修改后的年龄为：" + value);
+                } else {
+                    console.log("触发了一次修改年龄的事件");
+                }
+            });
+
+            var intCnt = 0;
+
+            var changeStuAge = function(model, value) {
+                intCnt++;
+                console.log("tirgger change age " + intCnt + " times");
+                if (value != undefined) {
+                    console.log("修改后的年龄为：" + value);
+                } else {
+                    console.log("触发了一次修改年龄的事件");
+                }
+            };
+
+            stu.trigger("changeNameAge");
+            stu.trigger("change:age");
+            stu.set("age", 16);
+
+            stu.on("event_changeStuAge", changeStuAge);
+            stu.trigger("event_changeStuAge");
+            stu.off("event_changeStuAge");
+            stu.trigger("event_changeStuAge");
+            //先触发属性事件，再触发默认的change事件
+
+        })
+    </script>
+</body>
+
+</html>

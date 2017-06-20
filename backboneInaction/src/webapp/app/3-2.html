@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            var person = backbone.Model.extend({
+                defaults: {
+                    name: "Hanmeimei",
+                    sex: "",
+                    phone: ""
+                }
+            });
+            var man = new person();
+            man.on("change", function() {
+                console.log("改变了对象的默认值");
+            });
+            man.on("change:name", function(model, value) {
+                console.log("修改了name属性的值， 新值为：" + value);
+            });
+            man.set("name", "Lilei");
+
+            //先触发属性事件，再触发默认的change事件
+        })
+    </script>
+</body>
+
+</html>

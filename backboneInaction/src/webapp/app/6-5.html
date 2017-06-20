@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        body {
+            font-size: 13px;
+        }
+        
+        div {
+            width: 260px;
+            padding: 5px;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0px;
+            margin: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="ulshowstus"></ul>
+    <script type="text/template" id="stus-tpl">
+        <li>ID :
+            <%=ID%>
+        </li>
+        <li>Name :
+            <%=Name%>
+        </li>
+        <li>Score :
+            <%=Score%>
+        </li>
+    </script>
+
+</body>
+<script type="text/javascript">
+    require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+
+        var student = backbone.Model.extend({
+            defaults: {
+                ID: "",
+                Name: "",
+                Score: 0
+            }
+        });
+        var stu = new student({
+            ID: "00001",
+            Name: "Lilei",
+            Score: 500
+        });
+        var studentView = backbone.View.extend({
+            el: $("#ulshowstus"), //这边对应的是页面上元素
+            initialize: function() {
+                this.template = _.template($("#stus-tpl").html());
+            },
+            render: function() {
+                this.$el.html(this.template(this.model.toJSON()));
+            }
+
+        });
+
+
+        var stuView = new studentView({
+            model: stu
+        });
+        stuView.render();
+    })
+</script>
+
+</html>

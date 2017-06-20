@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            var student = backbone.Model.extend({
+                defaults: {
+                    name: "Hanmeimei",
+                    sex: "",
+                    phone: "",
+                    age: 14,
+                    score: 100
+                }
+            });
+            var stu = new student();
+            var obj = _.extend({}, backbone.Events);
+            obj.listenTo(stu, "change:age", function(model, value) {
+                var oldAge = model.previous("age");
+                var newAge = model.get("age");
+                if (oldAge != newAge) {
+                    console.log("old age is：" + oldAge + " new age is:" + newAge);
+                }
+            });
+            stu.set("age", 16);
+
+
+            //先触发属性事件，再触发默认的change事件
+
+        })
+    </script>
+</body>
+
+</html>

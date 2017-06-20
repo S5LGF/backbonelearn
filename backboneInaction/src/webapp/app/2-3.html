@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            // find()函数 调用格式_.find(list, iterator, [context])
+            console.log("find函数使用");
+            var blnFind = _.find([1,2,3,4,5,8],
+                function(n){
+                    return (!(n % 2 == 0));
+                });
+            console.log(blnFind != undefined ? blnFind : "未找到")
+
+            //filter()函数 调用格式_.filter(list, iterator,[context])
+            console.log("filter函数使用");
+            var arr = [1,4,3,6,5,8];
+            var arr1 = _.filter(arr, function(n){
+                return (!(n % 2 == 0));
+                  });
+            console.log(arr1 != undefined ? arr1 : "未找到")
+
+            //max()函数 调用格式_.max(list, iterator, [context]);
+            console.log("max函数使用");
+            var max = _.max(arr);
+            console.log("最大值是："+ max);
+
+            //min()函数 调用格式_.min(list, iterator, [context]);
+            console.log("max函数使用");
+            var min = _.min(arr);
+            console.log("最小值是："+ min);
+
+            //sortBy()函数 调用格式_.sortBy(list, iterator, [context]);
+            console.log("sortBy函数使用");
+            var student = [
+                {name:'lilei', score:80},
+                {name:'hanmeimei', score:100},
+                {name:'jim', score:70}
+            ];
+            var sort = _.sortBy(student, function(n){
+                return n.score;
+            });
+            for (var p in sort) {
+                console.log(sort[p].name + "->" + sort[p].score);
+            }
+
+            //groupBy()函数 调用格式_.groupBy(list, iterator, [context]);
+            console.log("groupBy函数使用");
+            var group = _.groupBy(student, function(n){
+                return n.score > 70;
+            });
+            console.log(group);
+
+            // first()函数 调用格式_first(array, [n])
+            console.log("first函数使用");
+            var first = _.first(student, 2);
+            console.log(first);
+
+            // last()函数 调用格式_last(array, [n])
+            console.log("first函数使用");
+            var last = _.last(student, 1);
+            console.log(last);
+
+            // indexOf()函数 调用格式_indexOf(array, value, [isSorted])
+            console.log("indexOf函数使用");
+            student = ['lilei','hanmeimei','jim'];
+            var find = _.indexOf(student, 'jim');
+            console.log(find);
+
+            // lastIndexOf()函数 调用格式_lastIndexOf(array, value, [formIndex])  fromIndex标识指定查找的最大索引号位置
+            console.log("lastIndexOf函数使用");
+            find = _.lastIndexOf(student, 'hanmeimei', 2);
+            console.log(find);
+
+            // without()函数 调用格式_without(array,[*values])
+            console.log("without函数使用");
+            student = ['lilei','hanmeimei','jim'];
+            var newStudent = _.without(student, 'jim');
+            console.log(newStudent);
+
+            // union()函数 调用格式_union(*arrays)
+            console.log("union函数使用");
+            student2 = ['lintao','lily','lucy'];
+            var newStudent = _.union(student, student2);
+            console.log(newStudent);
+        })
+    </script>
+</body>
+</html>

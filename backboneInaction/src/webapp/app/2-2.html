@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            // each()函数 调用格式_.each(list, iterator, [context])
+            console.log("echa函数使用");
+            var arr = [1,2,3,4,5,8]
+            _.each(arr, function(n){
+                    if (!(n % 2)){
+                        console.log(n);
+                    }
+                }
+            );
+
+            //map()函数 调用格式_.map(list, iterator,[context])
+            console.log("map函数使用");
+            var arr1 = _.map(arr, function(n){
+                    if (!(n % 2)){
+                        return n;
+                    }});
+            for (var i = 0; i < arr1.length; i++) {
+                if (arr1[i] != undefined) {
+                    console.log(i + "->" + arr1[i]);
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

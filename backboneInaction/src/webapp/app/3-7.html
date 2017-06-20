@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        body {
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="btnView">
+        <input type="button" value="Show" id="btnShow" />
+        <input type="button" value="Hide" id="btnHide" />
+    </div>
+    <div id="infoView">
+        Grade: 1 <br> Name:Lilei
+        <br> Sex:Male
+        <br>
+
+    </div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            //在view模块中定义事件
+            var InfoView = backbone.View.extend({
+                el: '#btnView',
+                events: {
+                    'click #btnShow': 'showInfo',
+                    'click #btnHide': 'hideInfo'
+                },
+                showInfo: function() {
+                    $("#infoView").show();
+                },
+                hideInfo: function() {
+                    $("#infoView").hide();
+                }
+            });
+
+            //先触发属性事件，再触发默认的change事件
+            var view = new InfoView();
+        })
+    </script>
+</body>
+
+</html>

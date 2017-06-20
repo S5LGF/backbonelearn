@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        .cls_6 {
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+</body>
+<script type="text/javascript">
+    require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+        var testview = backbone.View.extend({
+            id: 'show',
+            className: 'cls_6',
+            render: function(content) {
+                this.el.innerHTML = content;
+                document.body.appendChild(this.el);
+            }
+        });
+        var test = new testview();
+        test.render("class one");
+    })
+</script>
+
+</html>

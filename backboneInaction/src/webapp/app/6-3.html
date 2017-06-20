@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        .cls_6 {
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="show" class="cls_6">
+
+    </div>
+
+</body>
+<script type="text/javascript">
+    require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+
+        var stumodels = [{
+            ID: "00001",
+            Name: "Hanmeimei",
+            Score: "500"
+        }, {
+            ID: "00002",
+            Name: "Lilei",
+            Score: "500"
+        }];
+
+        var stuList = new backbone.Collection(stumodels);
+        var studentView = backbone.View.extend({
+            el: '#show', //这边对应的是页面上元素
+            render: function() {
+                //this.el.innerHTML = JSON.stringify(this.model);
+                this.showStu();
+            },
+            showStu: function() {
+                var curList = this.collection.models;
+                for (var i = 0; i < curList.length; i++) {
+                    this.el.innerHTML += JSON.stringify(curList[i]) + "</br>";
+                }
+            }
+        });
+
+
+        var stuView = new studentView({
+            collection: stuList
+        });
+        stuView.render();
+    })
+</script>
+
+</html>

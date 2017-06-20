@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            //定义模型类
+            window.FirstExample = backbone.Model.extend({
+                defaults: {
+                    content: ''    //使用defaults方式设置模型类实例化时，将赋值默认数据项
+                }
+            });
+            // 创建集合模型类
+            window.ExampleList = backbone.Collection.extend({
+                model: FirstExample //使用model方式声明该集合类继承了模型类FirstExample
+            });
+            // 向模型添加数据
+            var data = new ExampleList({
+                content: 'hello, world!' //实例化一个集合类对象data并设置默认数据项的值。
+            });
+            //创建View对象
+            window.ExampleView = backbone.View.extend({
+                el: $('body'), // 将el属性设置为"$("body")" 表明是针对整个页面元素部分
+                initialize: function() { //定义initialize（）函数中，通过get方法获取集合对象data中content数据项的值
+                    $("#divTip").html(data.models[0].get("content"));
+                }
+            });
+            //实例化View对象
+            window.App = new ExampleView;
+        })
+    </script>
+</body>
+</html>

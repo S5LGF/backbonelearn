@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            var person = backbone.Model.extend({
+                defaults: {
+                    name: "",
+                    sex: "",
+                    phone: ""
+                }
+            });
+            var man = new person();
+            man.on("change", function() {
+                console.log("改变了对象的默认值");
+            });
+            man.set("name", "Lilei");
+        })
+    </script>
+</body>
+
+</html>

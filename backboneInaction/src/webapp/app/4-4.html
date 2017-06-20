@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        body {
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            var student = backbone.Model.extend({
+                initialize: function() {
+                    intCnt++;
+                    console.log("创建了" + intCnt + "个对象");
+
+                    this.on("change:Name", function() {
+                        var oldName = this.previous("Name");
+                        var newName = this.get("Name");
+                        if (oldName != newName) {
+                            console.log("old Name " + oldName + ", new Name " + newName);
+                        }
+                    });
+                },
+                url: "../app/api/save.php",
+                defaults: {
+                    Name: "",
+                    Sex: "",
+                    Score: ""
+                },
+                printLog: function() {
+                    console.log(this.get("Name") + " Grade " + this.get("Grade") + " Class " + this.get("Class"));
+                    console.log(this.escape("Name") + " Grade " + this.escape("Grade") + " Class " + this.escape("Class"));
+                }
+
+            });
+
+            var intCnt = 0;
+            var stuA = new student();
+            stuA.set({
+                Name: "LiLei",
+                Score: "100",
+                Grade: "<1>",
+                Class: "<2>"
+            });
+
+            stuA.save();
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>template自定义模板</title>
+    <script src="../lib/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="../lib/underscore-min.js" type="text/javascript"></script>
+    <style type="text/css">
+        body {
+            font-size: 13px
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0px;
+            margin: 0px;
+            width: 360px
+        }
+
+        li:first-child span {
+            float: left;
+            border-bottom: solid 1px #ccc;
+            background-color: #eee;
+            font-weight: bold
+        }
+
+        ui li span {
+            width: 80px;
+            text-align: left;
+            float: left;
+            padding: 0px 5px;
+            border-bottom: dashed 1px #ccc;
+            line-height: 28px;
+        }
+    </style>
+</head>
+
+<body>
+
+<ul id="element">
+    <li>
+            <span>No<span>
+            <span>Name</span>
+            <span>Sex</span>
+            <span>Total Score</span>
+    </li>
+</ul>
+
+<script type="text/javascript" id="tpl">
+    <%
+    var intSumSocre = 0, intAveSocre = 0;
+    for (var i = 0; i < list.length; i++) {%>
+    <%
+        var item = list[i] % >
+        < li >
+        < span > < %= item.StuId % > < / span > <
+        span > < %= item.Name % > < / span > <
+        span > < %= item.Sex % > < / span > <
+        span > < %= item.Score % > < / span > <
+        / li >
+        < %
+        intSumSocre += parseInt(item.Score);
+        intAveSocre = intSumSocre / list.length;
+    }
+    %> <
+    li >
+    <
+    span > Avrage
+    Score: <
+    /
+    span > <
+    span > < %= intAveScore % > < / span > <
+        span > Total
+    Score < / span > <
+    span > < %= intSumScore % > < / span > <
+        / li >
+</script>
+
+<script type="text/javascript">
+    var ele = $('#element');
+    var tpl = $('#tpl').html();
+    var data = {
+        list: [{
+            StuId: '0101',
+            Name: 'Lilei',
+            Sex: 'Male',
+            Score: '500'
+        }, {
+            StuId: '0102',
+            Name: 'Hanmeimei',
+            Sex: 'Female',
+            Score: '500'
+        }, {
+            StuId: '0103',
+            Name: 'Jim',
+            Sex: 'Male',
+            Score: '350'
+        }, {
+            StuId: '0104',
+            Name: 'Lintao',
+            Sex: 'Male',
+            Score: '450'
+        }]
+    }
+    var html = _.template(tpl, data);
+    ele.append(html);
+</script>
+</body>
+
+</html>

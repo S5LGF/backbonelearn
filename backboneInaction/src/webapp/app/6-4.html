@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        body {
+            font-size: 13px;
+        }
+        
+        div {
+            width: 260px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="Name"></div>
+    <div id="Score"></div>
+    <script type="text/template" id="score-tpl">
+        <%= score>500 ? "优秀" :"良好"%>
+    </script>
+
+</body>
+<script type="text/javascript">
+    require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+
+        var studentView = backbone.View.extend({
+            el: $("#Score"), //这边对应的是页面上元素
+            initialize: function() {
+                this.template = _.template($("#score-tpl").html());
+            },
+            render: function(pscore) {
+                //this.el.innerHTML = JSON.stringify(this.model);
+                this.$el.html(this.template({
+                    score: pscore
+                }));
+            }
+
+        });
+
+
+        var stuView = new studentView();
+        stuView.render(550);
+    })
+</script>
+
+</html>

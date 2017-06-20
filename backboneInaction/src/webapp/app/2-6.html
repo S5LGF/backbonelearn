@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            // random()函数 调用格式_.random(min, max)
+            console.log("random函数使用");
+            var intdef = _.random(10);
+            var intnum = _.random(10, 20);
+
+            console.log("两个随机数分别为：random1=" + intdef + ", random2=" + intnum);
+
+            // escape()函数 调用格式_.escape(string)
+            console.log("escape函数使用");
+            var escStr = _.escape("初级英语1332&1111<Miss Gao>");
+            console.log("编码后：" + escStr);
+
+            // unescape()函数 调用格式_.unescape(string)
+            console.log("unescape函数使用");
+            var unescStr = _.unescape(escStr);
+            console.log("编码前：" + unescStr);
+
+            // template()函数 调用格式_.template(templateString, [data], [settings])
+            var tpl = _.template("<%console.log(str)%>");
+            tpl({
+                str: '初级英语 教师：Miss Gao'
+            });
+
+            tpl = _.template("<%=str%>");
+            console.log(tpl({
+                str: 'How are you'
+            }));
+
+            tpl = _.template("<%-str%>")
+            console.log(tpl({
+                str: "name &: Lilei"
+            }));
+
+        })
+    </script>
+</body>
+
+</html>

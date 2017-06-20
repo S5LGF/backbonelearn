@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            var student = backbone.Model.extend({
+                defaults: {
+                    name: "Hanmeimei",
+                    sex: "",
+                    phone: "",
+                    age: "14",
+                    score: "100"
+                }
+            });
+            var stu = new student();
+            stu.on("change", function() {
+                console.log("改变了对象的默认值");
+            });
+            stu.on("change:name", function(model, value) {
+                console.log("修改了name属性的值， 新值为：" + value);
+            });
+            stu.on("change:score", function(model, value) {
+                var oldScore = model.previous("score");
+                if (value > oldScore) {
+                    console.log("成绩进步了，提升了" + (value - oldScore) + "分");
+                } else if (value < oldScore) {
+                    console.log("成绩退步了，下降了" + (oldScore - value) + "分");
+                } else {
+                    console.log("成绩没有变化");
+                }
+
+            });
+            stu.on("change:age", function(model, value) {
+                var oldAge = model.previous("age");
+                if (value > oldAge) {
+                    console.log("年岁增长了" + (value - oldAge) + "岁");
+                } else {
+                    console.log("年岁没有变化");
+                }
+            });
+
+            stu.set({
+                "name": "Lilei",
+                "age": 15,
+                "score": 150
+            });
+
+            //先触发属性事件，再触发默认的change事件
+        })
+    </script>
+</body>
+
+</html>

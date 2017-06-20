@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            // delay()函数 调用格式_.delay(function, wait, [*arguments])
+            console.log("delay函数使用");
+            var fun = function (n) {
+                console.log('初级英语，人教版:' + n);
+            }
+            _.delay(fun, 1000, "lesson one");
+
+            // once()函数 调用格式_.once(function)
+            console.log("once函数使用");
+            var num;
+            var str;
+            var fun = function () {
+                num = 0;
+                str = 1;
+                console.log("初始化成功！")
+            }
+            var init = _.once(fun);
+            init();
+            console.log("初始化后值->num:"+ num + "; str:" + str);
+
+            // wrap()函数 调用格式_.wrap(function, wrapper)
+            console.log("wrap函数使用");
+            var input = function (name, sex) {
+                return sex ? "Uncle " + name : " Aunt" + name ;
+            }
+            input = _.wrap(input, function (input){
+               return "hello, " + input("wang", 1) + ", welcome to Class 1!";
+            });
+            console.log(input())
+
+            // compose()函数 调用格式_.compose(*functions)
+            console.log("compose函数使用");
+            var A = function (a1) {return a1 * a1;}
+            var B = function (b1) {return b1 * b1;}
+            var C = function (c1) {return c1 * c1;}
+            var D = _.compose(A,B,C);
+            // 2*2 ——》4 *4 -》 16 * 16
+            console.log('final result:' + D(2));
+        })
+    </script>
+</body>
+</html>

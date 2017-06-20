@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+<body>
+    <div id="divTip"></div>
+    <script type="text/javascript">
+        require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+            // keys()函数 调用格式_.keys(object)
+            console.log("keys函数使用");
+            var student = [
+                {
+                    name : 'lilei',
+                    sex: 'male'
+                }
+            ];
+
+            var arrkey = _.keys(student[0]);
+            console.log(arrkey);
+
+            // values()函数 调用格式_.values(object)
+            console.log("keys函数使用");
+
+            var arrVal = _.values(student[0]);
+            console.log(arrVal);
+
+            // pick()函数 调用格式_.pick(object, *keys)
+            console.log("pick函数使用");
+            var data = {
+                A:1,
+                B:2,
+                C:3,
+                D:4
+            }
+            var newData = _.pick(data, 'A', 'D');
+            console.log(newData);
+
+            // omit()函数,调用格式_.omit(object, *keys); 排除没有列入的key属性对象
+            console.log("omit函数使用");
+            newData = _.omit(data, 'A','D');
+            console.log(newData);
+
+            // defaults()函数,调用格式_.defaults(object, *defaults);
+            console.log("defaults函数使用");
+            var persone = {};
+            persone = _.defaults(persone, {
+                name : '',
+                sex : 'male'
+            });
+            persone.name = "Lintao";
+            console.log(persone);
+
+            // has()函数,调用格式_.has(object, key);
+            console.log("has函数使用");
+            persone = {
+                name : 'Lintao',
+                sex : 'male'
+            };
+            var str ;
+            if (_.has(persone, 'phone')) {
+                str = persone.phone;
+            }
+            else {
+                str = "not found property";
+            }
+            console.log(str);
+        })
+    </script>
+</body>
+</html>

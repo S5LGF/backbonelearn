@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        body {
+            font-size: 13px;
+        }
+        
+        div#showDiv {
+            border-radius: 25px;
+            padding: 50px;
+            width: 200px;
+            height: 50px;
+            background-color: aquamarine;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        .changed {
+            border: solid 1px red;
+            transform: rotate(30deg);
+            -ms-transform: rotate(30deg);
+            /* IE 9 */
+            -webkit-transform: rotate(30deg);
+            /* Safari and Chrome */
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main"></div>
+    <script type="text/template" id="main-tpl">
+        <div id="showDiv">
+            Junior English
+        </div>
+        <input id="btn_change" type="button" value="Change CSS" />
+        <input id="btn_cancelBind" type="button" value="Cancel Bind" />
+        <input id="btn_reBind" type="button" value="Rebind" onclick="sutview.rebind()" />
+    </script>
+</body>
+<script type="text/javascript">
+    var sutview = null;
+    var stu = require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+        _.templateSettings = {
+            interpolate: /\{\{(.+?)\}\}/g
+        };
+        var studentView = backbone.View.extend({
+            el: $("#main"), //这边对应的是页面上元素
+            initialize: function() {
+                this.template = _.template($("#main-tpl").html());
+                this.render();
+            },
+            render: function() {
+                this.$el.html(this.template());
+            },
+            rebind: function() {
+                this.delegateEvents(this.events);
+            },
+            events: {
+                'click input#btn_change': 'togglecls',
+                'click input#btn_cancelBind': 'cancelBindClick'
+                    //'click input#btn_reBind': 'rebindClick'
+            },
+            togglecls: function() {
+                $("#showDiv").toggleClass("changed");
+            },
+            cancelBindClick: function() {
+                this.undelegateEvents();
+            },
+            rebindClick: function() {
+                this.rebind();
+            }
+
+        });
+        var stuView = new studentView();
+        return stuView;
+    });
+
+    stuview = new stu();
+</script>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        body {
+            font-size: 13px;
+        }
+        
+        div {
+            border-radius: 25px;
+            padding: 50px;
+            width: 200px;
+            height: 50px;
+            background-color: aquamarine;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        .changed {
+            border: solid 1px red;
+            transform: rotate(30deg);
+            -ms-transform: rotate(30deg);
+            /* IE 9 */
+            -webkit-transform: rotate(30deg);
+            /* Safari and Chrome */
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body></body>
+<script type="text/javascript">
+    require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+        _.templateSettings = {
+            interpolate: /\{\{(.+?)\}\}/g
+        };
+        var studentView = backbone.View.extend({
+            el: $("body"), //这边对应的是页面上元素
+            initialize: function() {
+                this.render();
+            },
+            render: function() {
+                this.$el.append('<div id= "juniorenglish" align="center">Junior English </div>');
+            },
+            events: {
+                'click div#juniorenglish': 'togglecls'
+            },
+            togglecls: function() {
+                $("#juniorenglish").toggleClass("changed")
+            }
+
+        });
+        var stuView = new studentView();
+    })
+</script>
+
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/require.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        body {
+            font-size: 13px;
+        }
+        
+        div#main {
+            border-radius: 25px;
+            padding: 50px;
+            width: 400px;
+            height: 150px;
+            background-color: aquamarine;
+            align-content: center;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        ul li {
+            margin: 5px 0px;
+        }
+        
+        ul .lh {
+            height: 20px;
+            line-height: 20px;
+            font-weight: bold;
+            border-bottom: solid 1px;
+            background-color: aquamarine;
+        }
+        
+        ul .lc {
+            height: 20px;
+            line-height: 20px;
+            border-bottom: dashed 1px #caa;
+        }
+        
+        ul li span {
+            padding-left: 10px;
+            width: 80px;
+            float: left;
+        }
+        
+        .changed {
+            border: solid 1px red;
+            transform: rotate(30deg);
+            -ms-transform: rotate(30deg);
+            /* IE 9 */
+            -webkit-transform: rotate(30deg);
+            /* Safari and Chrome */
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <ul id="ulstudent">
+            <li class="lh">
+                <span>ID</span>
+                <span>Name</span>
+                <span>Score</span>
+            </li>
+        </ul>
+        <ul>
+            <li> ID:
+                <input id="textId" type="text" />
+            </li>
+            <li> Name:
+                <input id="textName" type="text" />
+            </li>
+            <li> Score:
+                <input id="textScore" type="text" />
+            </li>
+            <li>
+                <input id="btnSubmit" type="button" value="Add" />
+            </li>
+        </ul>
+    </div>
+
+    <script type="text/template" id="main-tpl">
+        <li class="lc">
+            <span>{{ID}}</span>
+            <span>{{Name}}</span>
+            <span>{{Score}}</span>
+        </li>
+
+    </script>
+</body>
+<script type="text/javascript">
+    require(['jquery', 'backbone', 'underscore'], function($, backbone, underscore) {
+        _.templateSettings = {
+            interpolate: /\{\{(.+?)\}\}/g
+        };
+        var student = backbone.Model.extend({
+            defaults: {
+                ID: "",
+                Name: "",
+                Socre: ""
+            }
+        });
+        var stuList = backbone.Collection.extend({
+            initialize: function(model, options) {
+                this.on("add", options.view.showmodel);
+            }
+        });
+        var studentView = backbone.View.extend({
+            el: $("#main"), //这边对应的是页面上元素
+            initialize: function() {
+                this.stul = new stuList(null, {
+                    view: this
+                })
+            },
+            events: {
+                "click #btnSubmit": "addStu"
+            },
+            addStu: function() {
+                var stu = new student({
+                    ID: $("#textId").val(),
+                    Name: $("#textName").val(),
+                    Score: $("#textScore").val()
+                });
+                this.stul.add(stu);
+            },
+
+            showmodel: function(model) {
+                this.template = _.template($("#main-tpl").html());
+                $("#ulstudent").append(this.template(model.toJSON()));
+            }
+
+        });
+        var stuView = new studentView();
+    });
+</script>
+
+</html>
